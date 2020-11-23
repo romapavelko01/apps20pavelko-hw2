@@ -153,7 +153,7 @@ public class ImmutableLinkedList implements ImmutableList {
             }
             Node nodeNextNext = probe.getNext().getNext();
             probe.setNext(nodeNextNext);
-            return new ImmutableLinkedList(probe,this.size - 1);
+            return new ImmutableLinkedList(probe, this.size - 1);
             }
         }
 
@@ -181,7 +181,7 @@ public class ImmutableLinkedList implements ImmutableList {
         if (e == null) {
             throw new NullPointerException();
         }
-        Boolean found = false;
+        boolean found = false;
         int myIndex = 0;
         Node probe = this.head;
         while (myIndex < this.size) {
