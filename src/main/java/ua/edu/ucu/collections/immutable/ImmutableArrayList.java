@@ -42,9 +42,9 @@ public class ImmutableArrayList implements ImmutableList {
             myIndex += 1;
         }
         finalArray[index] = e;
-        while (index < this.myArray.length) {
-            finalArray[index + 1] = this.myArray[index];
-            index += 1;
+        while (myIndex < this.myArray.length) {
+            finalArray[myIndex + 1] = this.myArray[myIndex];
+            myIndex += 1;
         }
         return new ImmutableArrayList(finalArray);
     }
@@ -115,7 +115,8 @@ public class ImmutableArrayList implements ImmutableList {
         Object[] finalArray = new Object[this.myArray.length - 1];
         int myIndex = 0;
         int finalIndex = 0;
-        while (finalIndex < finalArray.length && myIndex < this.myArray.length) {
+        while (finalIndex < finalArray.length
+                && myIndex < this.myArray.length) {
             if (myIndex == index) {
                 myIndex += 1;
             }
