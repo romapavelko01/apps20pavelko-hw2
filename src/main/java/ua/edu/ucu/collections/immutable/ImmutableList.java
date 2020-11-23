@@ -1,5 +1,7 @@
 package ua.edu.ucu.collections.immutable;
 
+import sun.security.util.math.ImmutableIntegerModuloP;
+
 // У результаті змін, що призводять на модифікації (зміну стану) колекції має повртатись нова колекція
 public interface ImmutableList {
 
