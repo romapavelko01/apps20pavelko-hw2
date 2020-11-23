@@ -242,4 +242,29 @@ public class ImmutableArrayListTest {
 
         assertNotEquals(actStringOne, newString);
     }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testRemoveWithIndexError() {
+        Object[] myObjs = {1, 2, 3};
+        ImmutableArrayList newArrList = new ImmutableArrayList(myObjs);
+        newArrList.remove(4);
+        newArrList.remove(-1);
+    }
+    @Test
+    public void testRemove() {
+        Object[] myArr = {2.5, "3"};
+        ImmutableArrayList myArrList = new ImmutableArrayList(myArr);
+        ImmutableList myImmListOne = myArrList.remove(1);
+
+        assertEquals(1, myImmListOne.size());
+
+        Object[] expArr = {2.5};
+        Object[] actArr = myImmListOne.toArray();
+
+        assertArrayEquals(expArr, actArr);
+
+        ImmutableList myImmListTwo = myImmListOne.remove(0);
+
+        assertTrue(myImmListTwo.isEmpty());
+    }
 }
