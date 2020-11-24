@@ -27,7 +27,7 @@ public class ImmutableLinkedListTest {
     public void testAdd() {
         Object[] myList = {10, "2"};
         ImmutableLinkedList myImmLinkedList = new ImmutableLinkedList(myList);
-        ImmutableList myNewList = myImmLinkedList.add(25.5);
+        ImmutableLinkedList myNewList = myImmLinkedList.add(25.5);
         Object[] expArr = {10, "2", 25.5};
         Object[] actArr = myNewList.toArray();
         int expSize = 3;
@@ -37,7 +37,7 @@ public class ImmutableLinkedListTest {
         assertArrayEquals(expArr, actArr);
 
         ImmutableLinkedList lastImmList = new ImmutableLinkedList();
-        ImmutableList myLastList = lastImmList.add(24);
+        ImmutableLinkedList myLastList = lastImmList.add(24);
 
         assertTrue(lastImmList.isEmpty());
         assertFalse(myLastList.isEmpty());
@@ -60,13 +60,13 @@ public class ImmutableLinkedListTest {
 
         assertArrayEquals(objects, myArr);
 
-        ImmutableList myList = newLinkedList.addAll(objects);
+        ImmutableLinkedList myList = newLinkedList.addAll(objects);
         Object[] newArr = myList.toArray();
         Object[] expArr = {1, 2, 4, 1, 2, 4};
         assertArrayEquals(expArr, newArr);
 
-        ImmutableList newList = myList.clear();
-        ImmutableList myNewList = newList.addAll(expArr);
+        ImmutableLinkedList newList = myList.clear();
+        ImmutableLinkedList myNewList = newList.addAll(expArr);
 
         assertFalse(myNewList.isEmpty());
 
@@ -95,7 +95,7 @@ public class ImmutableLinkedListTest {
         Object[] myObjs = {1, 2, 3, 4};
         Object[] stuffToAdd = {3.5, "3.5"};
         ImmutableLinkedList myListOne = new ImmutableLinkedList(myObjs);
-        ImmutableList myListTwo = myListOne.addAll(3, stuffToAdd);
+        ImmutableLinkedList myListTwo = myListOne.addAll(3, stuffToAdd);
 
         Object[] expArrOne = {1, 2, 3, 3.5, "3.5", 4};
         Object[] actArrOne = myListTwo.toArray();
@@ -106,13 +106,13 @@ public class ImmutableLinkedListTest {
     public void testAddWithIndex() {
         Object[] myArr = {1, 2};
         ImmutableLinkedList myList = new ImmutableLinkedList(myArr);
-        ImmutableList finalList = myList.add(1, 3);
+        ImmutableLinkedList finalList = myList.add(1, 3);
         Object[] expArr = {1, 3, 2};
         Object[] actArr = finalList.toArray();
 
         assertArrayEquals(expArr, actArr);
 
-        ImmutableList newFinalList = finalList.add(2, 2);
+        ImmutableLinkedList newFinalList = finalList.add(2, 2);
         int expSize = 4;
         int actSize = newFinalList.size();
 
@@ -148,20 +148,20 @@ public class ImmutableLinkedListTest {
     public void testRemove() {
         Object[] finalInput = {"1", 2, 3.0};
         ImmutableLinkedList myListOne = new ImmutableLinkedList(finalInput);
-        ImmutableList myListTwo = myListOne.remove(0);
+        ImmutableLinkedList myListTwo = myListOne.remove(0);
 
         Object[] expArrOne = {2, 3.0};
         Object[] actArrOne = myListTwo.toArray();
         String expArrOneStr = Arrays.toString(expArrOne);
         String actArrOneStr = myListTwo.toString();
 
-        ImmutableList myListThree = myListTwo.remove(1);
+        ImmutableLinkedList myListThree = myListTwo.remove(1);
         Object[] expArrTwo = {2};
         Object[] actArrTwo = myListThree.toArray();
         String expArrTwoStr = Arrays.toString(expArrTwo);
         String actArrTwoStr = myListThree.toString();
 
-        ImmutableList myListFour = myListThree.remove(0);
+        ImmutableLinkedList myListFour = myListThree.remove(0);
         Object[] expArrThree = {};
         Object[] actArrThree = myListFour.toArray();
         String expArrThreeStr = Arrays.toString(expArrThree);
@@ -169,7 +169,7 @@ public class ImmutableLinkedListTest {
 
         Object[] myList = {1, 2, 3, 4, 5};
         ImmutableLinkedList myListFive = new ImmutableLinkedList(myList);
-        ImmutableList myFFF = myListFive.remove(2);
+        ImmutableLinkedList myFFF = myListFive.remove(2);
 
         Object[] expList = {1, 2, 4, 5};
         Object[] actList = myFFF.toArray();
@@ -209,12 +209,12 @@ public class ImmutableLinkedListTest {
     public void testSetAndGet() {
         Object[] myArr = {"1", 2, 3.0, "4.05"};
         ImmutableLinkedList newList = new ImmutableLinkedList(myArr);
-        ImmutableList myList = newList.set(0, 1);
+        ImmutableLinkedList myList = newList.set(0, 1);
         Object[] expArrOne = {1, 2, 3.0, "4.05"};
         Object[] actArrOne = myList.toArray();
         Object expObjectTwo = expArrOne[0];
         Object actObjectTwo = myList.get(0);
-        ImmutableList myListOne = myList.set(3, 4.05);
+        ImmutableLinkedList myListOne = myList.set(3, 4.05);
         Object[] expArrTwo = {1, 2, 3.0, 4.05};
         Object[] actArrTwo = myListOne.toArray();
         Object expObjectOne = expArrTwo[2];
@@ -249,5 +249,55 @@ public class ImmutableLinkedListTest {
         assertEquals(expIndexTwo, actIndexTwo);
         assertEquals(expIndexThree, actIndexThree);
         assertEquals(expIndexFour, actIndexFour);
+    }
+
+    @Test
+    public void testGetFirstAndLast() {
+        Object[] myObjs = {1, "2", 3.0};
+        ImmutableLinkedList myList = new ImmutableLinkedList(myObjs);
+        Object expFirstOne = myObjs[0];
+        Object actFirstOne = myList.getFirst();
+        Object expLastOne = myObjs[2];
+        Object actLastOne = myList.getLast();
+
+        assertEquals(expFirstOne, actFirstOne);
+        assertEquals(expLastOne, actLastOne);
+    }
+
+    @Test
+    public void testRemoveFirstAndLast() {
+        Object[] objects = {1, 1, 2, 3, 4, 5};
+        ImmutableLinkedList myList = new ImmutableLinkedList(objects);
+        ImmutableLinkedList newListOne = myList.removeFirst();
+
+        Object[] expArrOne = {1, 2, 3, 4, 5};
+        Object[] actArrOne = newListOne.toArray();
+
+        ImmutableLinkedList newListTwo = newListOne.removeLast();
+
+        Object[] expArrTwo = {1, 2, 3, 4};
+        Object[] actArrTwo = newListTwo.toArray();
+
+        assertArrayEquals(expArrOne, actArrOne);
+        assertArrayEquals(expArrTwo, actArrTwo);
+    }
+
+    @Test
+    public void testAddFirstAndLast() {
+        Object[] myObjs = {1, 2, 3, 4, 5, 6};
+        ImmutableLinkedList myListOne = new ImmutableLinkedList(myObjs);
+        ImmutableLinkedList newListOne = myListOne.addFirst(0);
+
+        Object[] expArrOne = {0, 1, 2, 3, 4, 5, 6};
+        Object[] actArrOne = newListOne.toArray();
+
+        ImmutableLinkedList myListTwo = newListOne.addLast(7);
+
+        Object[] expArrTwo = {0, 1, 2, 3, 4, 5, 6, 7};
+        Object[] actArrTwo = myListTwo.toArray();
+
+        System.out.println(Arrays.toString(actArrTwo));
+        assertArrayEquals(expArrOne, actArrOne);
+        assertArrayEquals(expArrTwo, actArrTwo);
     }
 }

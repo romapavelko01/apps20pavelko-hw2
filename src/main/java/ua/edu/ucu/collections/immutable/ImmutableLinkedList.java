@@ -32,7 +32,7 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList add(Object e) {
+    public ImmutableLinkedList add(Object e) {
         if (e == null) {
             throw new NullPointerException();
         }
@@ -52,8 +52,8 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList add(int index, Object e) {
-        if (index >= this.size || index < 0) {
+    public ImmutableLinkedList add(int index, Object e) {
+        if (index >= this.size && this.size != 0 || index < 0) {
             throw new IndexOutOfBoundsException();
         }
         if (e == null) {
@@ -63,22 +63,31 @@ public class ImmutableLinkedList implements ImmutableList {
             return new ImmutableLinkedList(new Node(e), 1);
         }
         else {
-            Node probe = this.head;
-            Node newHead = probe;
-            int myIndex = index;
-            while (myIndex > 1 && probe.getNext() != null) {
-                probe = probe.getNext();
-                myIndex -= 1;
+            if (index == 0) {
+                Node newHead = new Node(e);
+                newHead.setNext(this.head);
+                return new ImmutableLinkedList(newHead,
+                        this.size + 1);
             }
-            Node newNode = new Node(e);
-            newNode.setNext(probe.getNext());
-            probe.setNext(newNode);
-            return new ImmutableLinkedList(newHead, this.size + 1);
+            else {
+                Node probe = this.head;
+                Node newHead = probe;
+                int myIndex = index;
+                while (myIndex > 1 && probe.getNext() != null) {
+                    probe = probe.getNext();
+                    myIndex -= 1;
+                }
+                Node newNode = new Node(e);
+                newNode.setNext(probe.getNext());
+                probe.setNext(newNode);
+                return new ImmutableLinkedList(newHead,
+                        this.size + 1);
+            }
         }
     }
 
     @Override
-    public ImmutableList addAll(Object[] c) {
+    public ImmutableLinkedList addAll(Object[] c) {
         if (this.head != null) {
             Node probe = this.head;
             Node newHead = probe;
@@ -93,7 +102,8 @@ public class ImmutableLinkedList implements ImmutableList {
                     newNode = newNode.getNext();
                 }
             }
-            return new ImmutableLinkedList(newHead, this.size + c.length);
+            return new ImmutableLinkedList(newHead,
+                    this.size + c.length);
         }
         else {
             return new ImmutableLinkedList(c);
@@ -101,7 +111,7 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList addAll(int index, Object[] c) {
+    public ImmutableLinkedList addAll(int index, Object[] c) {
         if (index < 0 || index >= this.size) {
             throw new IndexOutOfBoundsException();
         }
@@ -118,7 +128,8 @@ public class ImmutableLinkedList implements ImmutableList {
             probe = probe.getNext();
         }
         probe.setNext(nextNode);
-        return new ImmutableLinkedList(newHead, this.size + c.length);
+        return new ImmutableLinkedList(newHead,
+                this.size + c.length);
 
     }
 
@@ -137,7 +148,7 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList remove(int index) {
+    public ImmutableLinkedList remove(int index) {
         if (index >= this.size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
@@ -147,7 +158,8 @@ public class ImmutableLinkedList implements ImmutableList {
         else {
             if (index == 0) {
                 Node probe = this.head.getNext();
-                return new ImmutableLinkedList(probe, this.size - 1);
+                return new ImmutableLinkedList(probe,
+                        this.size - 1);
             }
             else {
                 Node probe = this.head;
@@ -158,13 +170,14 @@ public class ImmutableLinkedList implements ImmutableList {
                 }
                 Node newNode = probe.getNext().getNext();
                 probe.setNext(newNode);
-                return new ImmutableLinkedList(newHead, this.size - 1);
+                return new ImmutableLinkedList(newHead,
+                        this.size - 1);
             }
         }
     }
 
     @Override
-    public ImmutableList set(int index, Object e) {
+    public ImmutableLinkedList set(int index, Object e) {
         if (index < 0 || index >= this.size) {
             throw new IndexOutOfBoundsException();
         }
@@ -211,8 +224,32 @@ public class ImmutableLinkedList implements ImmutableList {
         return this.size;
     }
 
+    public ImmutableLinkedList addFirst(Object e) {
+        return add(0, e);
+    }
+
+    public ImmutableLinkedList addLast(Object e) {
+        return add(e);
+    }
+
+    public ImmutableLinkedList removeFirst() {
+        return remove(0);
+    }
+
+    public ImmutableLinkedList removeLast() {
+        return remove(this.size() - 1);
+    }
+
+    public Object getFirst() {
+        return get(0);
+    }
+
+    public Object getLast() {
+        return get(this.size() - 1);
+    }
+
     @Override
-    public ImmutableList clear() {
+    public ImmutableLinkedList clear() {
         return new ImmutableLinkedList();
     }
 
