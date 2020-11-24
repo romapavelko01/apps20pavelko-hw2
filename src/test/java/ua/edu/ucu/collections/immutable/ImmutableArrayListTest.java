@@ -16,6 +16,7 @@ public class ImmutableArrayListTest {
         ImmutableList almostList = myList.add(null);
         Object[] almostListArr = almostList.toArray();
         assertArrayEquals(myIntArray, almostListArr);
+        myList.add(2, null);
     }
 
     @Test
@@ -67,6 +68,7 @@ public class ImmutableArrayListTest {
         Object[] myArr = {1, 2, 3};
         ImmutableArrayList myImmArrList = new ImmutableArrayList(myArr);
         myImmArrList.addAll(null);
+        myImmArrList.addAll(2, null);
     }
 
     @Test
@@ -128,11 +130,13 @@ public class ImmutableArrayListTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void testGetWithIndexErr() {
+    public void testGetAndSetWithIndexErr() {
         Object[] myObjArr = {1, 2};
         ImmutableArrayList myArrList = new ImmutableArrayList(myObjArr);
         myArrList.get(2);
         myArrList.get(-1);
+        myArrList.set(34, 34);
+        myArrList.set(-34, -34);
     }
 
     @Test

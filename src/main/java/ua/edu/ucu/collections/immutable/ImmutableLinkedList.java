@@ -152,7 +152,8 @@ public class ImmutableLinkedList implements ImmutableList {
             else {
                 Node probe = this.head;
                 Node newHead = probe;
-                for (int myIndex = 0; probe != null && myIndex < index - 1; myIndex++) {
+                for (int myIndex = 0; probe != null
+                        && myIndex < index - 1; myIndex++) {
                     probe = probe.getNext();
                 }
                 Node newNode = probe.getNext().getNext();
