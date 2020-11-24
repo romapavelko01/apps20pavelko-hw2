@@ -14,6 +14,7 @@ public class ImmutableLinkedListTest {
         Object[] myList = {1, 2};
         ImmutableLinkedList myImmLinkedList = new ImmutableLinkedList(myList);
         myImmLinkedList.add(null);
+        myImmLinkedList.add(1, null);
     }
     @Test
     public void testAdd() {
@@ -164,5 +165,61 @@ public class ImmutableLinkedListTest {
         assertEquals(expArrTwoStr, actArrTwoStr);
         assertEquals(expArrThreeStr, actArrThreeStr);
         assertEquals(expListStr, actListStr);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testSetAndIndexOfErr() {
+        Object[] myArr = {1, 2, 3};
+        ImmutableLinkedList myList = new ImmutableLinkedList(myArr);
+        myList.set(2, null);
+        myList.indexOf(null);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSetIndexErr() {
+        Object[] myArr = {1, 2, 3};
+        ImmutableLinkedList myList = new ImmutableLinkedList(myArr);
+        myList.set(-1, 3);
+        myList.set(3, 3);
+    }
+
+    @Test
+    public void testSet() {
+        Object[] myArr = {"1", 2, 3.0, "4.05"};
+        ImmutableLinkedList newList = new ImmutableLinkedList(myArr);
+        ImmutableList myList = newList.set(0, 1);
+        Object[] expArrOne = {1, 2, 3.0, "4.05"};
+        Object[] actArrOne = myList.toArray();
+        ImmutableList myListOne = myList.set(3, 4.05);
+        Object[] expArrTwo = {1, 2, 3.0, 4.05};
+        Object[] actArrTwo = myListOne.toArray();
+
+        assertArrayEquals(expArrOne, actArrOne);
+        assertArrayEquals(expArrTwo, actArrTwo);
+    }
+
+    @Test
+    public void testIndexOf() {
+        Object[] myArr = {1, "2", 3.0, 4, 4, 18};
+        ImmutableLinkedList myList = new ImmutableLinkedList(myArr);
+
+        Object[] newArr = {};
+        ImmutableLinkedList anList = new ImmutableLinkedList(newArr);
+        int expIndex = -1;
+        int actIndex = anList.indexOf("2");
+        int expIndexOne = 0;
+        int actIndexOne = myList.indexOf(1);
+        int expIndexTwo = 3;
+        int actIndexTwo = myList.indexOf(4);
+        int expIndexThree = 5;
+        int actIndexThree = myList.indexOf(18);
+        int expIndexFour = -1;
+        int actIndexFour = myList.indexOf("18");
+
+        assertEquals(expIndex, actIndex);
+        assertEquals(expIndexOne, actIndexOne);
+        assertEquals(expIndexTwo, actIndexTwo);
+        assertEquals(expIndexThree, actIndexThree);
+        assertEquals(expIndexFour, actIndexFour);
     }
 }
