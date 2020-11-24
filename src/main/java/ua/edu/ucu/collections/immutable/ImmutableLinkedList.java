@@ -141,21 +141,26 @@ public class ImmutableLinkedList implements ImmutableList {
         if (index >= this.size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
-        if (index == 0) {
+        if (this.head.getNext() == null) {
             return new ImmutableLinkedList();
         }
         else {
-            Node probe = this.head;
-            int myIndex = index;
-            while (myIndex > 1 && probe.getNext().getNext() != null) {
-                probe = probe.getNext();
-                myIndex -= 1;
+            if (index == 0) {
+                Node probe = this.head.getNext();
+                return new ImmutableLinkedList(probe, this.size - 1);
             }
-            Node nodeNextNext = probe.getNext().getNext();
-            probe.setNext(nodeNextNext);
-            return new ImmutableLinkedList(probe, this.size - 1);
+            else {
+                Node probe = this.head;
+                Node newHead = probe;
+                for (int myIndex = 0; probe != null && myIndex < index - 1; myIndex++) {
+                    probe = probe.getNext();
+                }
+                Node newNode = probe.getNext().getNext();
+                probe.setNext(newNode);
+                return new ImmutableLinkedList(newHead, this.size - 1);
             }
         }
+    }
 
     @Override
     public ImmutableList set(int index, Object e) {
@@ -220,12 +225,27 @@ public class ImmutableLinkedList implements ImmutableList {
         Object[] myArr = new Object[this.size];
         Node probe = this.head;
         int index = 0;
-        while (probe.getNext() != null) {
+        while (index < this.size) {
             myArr[index] = probe.getData();
             probe = probe.getNext();
             index += 1;
         }
-        myArr[index] = probe.getData();
         return myArr;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder resStr = new StringBuilder();
+        resStr.append("[");
+        Node probe = this.head;
+        for (int j = 0; j < this.size; j++) {
+            resStr.append(probe.getData());
+            if (j != this.size - 1) {
+                resStr.append(", ");
+            }
+            probe = probe.getNext();
+        }
+        resStr.append("]");
+        return resStr.toString();
     }
 }

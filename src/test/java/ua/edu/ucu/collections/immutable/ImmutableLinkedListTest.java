@@ -1,9 +1,7 @@
 package ua.edu.ucu.collections.immutable;
 
-import jdk.nashorn.internal.ir.annotations.Immutable;
 import org.junit.Assert;
 import org.junit.Test;
-import sun.security.ec.point.ProjectivePoint;
 
 import java.util.Arrays;
 
@@ -60,12 +58,12 @@ public class ImmutableLinkedListTest {
         assertArrayEquals(expArr, newArr);
 
         ImmutableList newList = myList.clear();
-        ImmutableList myNewList = newList.add(expArr);
+        ImmutableList myNewList = newList.addAll(expArr);
 
         assertFalse(myNewList.isEmpty());
 
-//        assertArrayEquals(expArr, myNewList.toArray());
-//        assertEquals(6, myNewList.size());
+        assertArrayEquals(expArr, myNewList.toArray());
+        assertEquals(6, myNewList.size());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -116,5 +114,55 @@ public class ImmutableLinkedListTest {
         myLinked.indexOf(null);
         myLinked.set(1, null);
         myLinked.add(1, null);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testRemoveWithErr() {
+        Object[] myArr = {1, 2, 3};
+        ImmutableLinkedList myList = new ImmutableLinkedList(myArr);
+        myList.remove(3);
+    }
+
+    @Test
+    public void testRemove() {
+        Object[] finalInput = {"1", 2, 3.0};
+        ImmutableLinkedList myListOne = new ImmutableLinkedList(finalInput);
+        ImmutableList myListTwo = myListOne.remove(0);
+
+        Object[] expArrOne = {2, 3.0};
+        Object[] actArrOne = myListTwo.toArray();
+        String expArrOneStr = Arrays.toString(expArrOne);
+        String actArrOneStr = myListTwo.toString();
+
+        ImmutableList myListThree = myListTwo.remove(1);
+        Object[] expArrTwo = {2};
+        Object[] actArrTwo = myListThree.toArray();
+        String expArrTwoStr = Arrays.toString(expArrTwo);
+        String actArrTwoStr = myListThree.toString();
+
+        ImmutableList myListFour = myListThree.remove(0);
+        Object[] expArrThree = {};
+        Object[] actArrThree = myListFour.toArray();
+        String expArrThreeStr = Arrays.toString(expArrThree);
+        String actArrThreeStr = myListFour.toString();
+
+        Object[] myList = {1, 2, 3, 4, 5};
+        ImmutableLinkedList myListFive = new ImmutableLinkedList(myList);
+        ImmutableList myFFF = myListFive.remove(2);
+
+        Object[] expList = {1, 2, 4, 5};
+        Object[] actList = myFFF.toArray();
+        String expListStr = Arrays.toString(expList);
+        String actListStr = myFFF.toString();
+
+        assertArrayEquals(expList, actList);
+        assertArrayEquals(expArrOne, actArrOne);
+        assertArrayEquals(expArrTwo, actArrTwo);
+        assertArrayEquals(expArrThree, actArrThree);
+
+        assertEquals(expArrOneStr, actArrOneStr);
+        assertEquals(expArrTwoStr, actArrTwoStr);
+        assertEquals(expArrThreeStr, actArrThreeStr);
+        assertEquals(expListStr, actListStr);
     }
 }
