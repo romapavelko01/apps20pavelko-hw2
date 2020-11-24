@@ -14,8 +14,15 @@ public class ImmutableLinkedListTest {
         Object[] myList = {1, 2};
         ImmutableLinkedList myImmLinkedList = new ImmutableLinkedList(myList);
         myImmLinkedList.add(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testAddWithIndexNullErr() {
+        Object[] myList = {1, 2};
+        ImmutableLinkedList myImmLinkedList = new ImmutableLinkedList(myList);
         myImmLinkedList.add(1, null);
     }
+
     @Test
     public void testAdd() {
         Object[] myList = {10, "2"};
@@ -73,8 +80,14 @@ public class ImmutableLinkedListTest {
         Object[] stuffToAdd = {1, 2};
         ImmutableLinkedList myList = new ImmutableLinkedList(myObjs);
         myList.addAll(3, stuffToAdd);
-        myList.get(-1);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetWithIndexErr() {
+        Object[] myObjs = {1, 2, 3};
+        ImmutableLinkedList myList = new ImmutableLinkedList(myObjs);
         myList.get(3);
+        myList.get(-1);
     }
 
     @Test
@@ -82,9 +95,9 @@ public class ImmutableLinkedListTest {
         Object[] myObjs = {1, 2, 3, 4};
         Object[] stuffToAdd = {3.5, "3.5"};
         ImmutableLinkedList myListOne = new ImmutableLinkedList(myObjs);
-        ImmutableList myListTwo = myListOne.addAll(1, stuffToAdd);
+        ImmutableList myListTwo = myListOne.addAll(3, stuffToAdd);
 
-        Object[] expArrOne = {1, 3.5, "3.5", 2, 3, 4};
+        Object[] expArrOne = {1, 2, 3, 3.5, "3.5", 4};
         Object[] actArrOne = myListTwo.toArray();
 
         assertArrayEquals(expArrOne, actArrOne);
@@ -111,12 +124,17 @@ public class ImmutableLinkedListTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void testOther() {
+    public void testSetNullErr() {
+        Object[] myArr = {1, 2};
+        ImmutableLinkedList myLinked = new ImmutableLinkedList(myArr);
+        myLinked.set(1, null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testIndexOfWithNullErr() {
         Object[] myArr = {1, 2};
         ImmutableLinkedList myLinked = new ImmutableLinkedList(myArr);
         myLinked.indexOf(null);
-        myLinked.set(1, null);
-        myLinked.add(1, null);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -183,6 +201,8 @@ public class ImmutableLinkedListTest {
         ImmutableLinkedList myList = new ImmutableLinkedList(myArr);
         myList.set(-1, 3);
         myList.set(3, 3);
+        myList.get(-1);
+        myList.get(4);
     }
 
     @Test
