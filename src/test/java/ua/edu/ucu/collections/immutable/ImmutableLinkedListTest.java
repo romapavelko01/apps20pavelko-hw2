@@ -68,11 +68,13 @@ public class ImmutableLinkedListTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void testAddAllWithIndexErr() {
+    public void testAddAllAndGetWithIndexErr() {
         Object[] myObjs = {1, 2, 3};
         Object[] stuffToAdd = {1, 2};
         ImmutableLinkedList myList = new ImmutableLinkedList(myObjs);
         myList.addAll(3, stuffToAdd);
+        myList.get(-1);
+        myList.get(3);
     }
 
     @Test
@@ -184,16 +186,22 @@ public class ImmutableLinkedListTest {
     }
 
     @Test
-    public void testSet() {
+    public void testSetAndGet() {
         Object[] myArr = {"1", 2, 3.0, "4.05"};
         ImmutableLinkedList newList = new ImmutableLinkedList(myArr);
         ImmutableList myList = newList.set(0, 1);
         Object[] expArrOne = {1, 2, 3.0, "4.05"};
         Object[] actArrOne = myList.toArray();
+        Object expObjectTwo = expArrOne[0];
+        Object actObjectTwo = myList.get(0);
         ImmutableList myListOne = myList.set(3, 4.05);
         Object[] expArrTwo = {1, 2, 3.0, 4.05};
         Object[] actArrTwo = myListOne.toArray();
+        Object expObjectOne = expArrTwo[2];
+        Object actObjectOne = myListOne.get(2);
 
+        assertEquals(expObjectOne, actObjectOne);
+        assertEquals(expObjectTwo, actObjectTwo);
         assertArrayEquals(expArrOne, actArrOne);
         assertArrayEquals(expArrTwo, actArrTwo);
     }
