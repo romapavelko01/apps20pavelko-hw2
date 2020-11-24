@@ -17,6 +17,7 @@ public class ImmutableArrayListTest {
         Object[] almostListArr = almostList.toArray();
         assertArrayEquals(myIntArray, almostListArr);
         myList.add(2, null);
+        myList.add(0, null);
     }
 
     @Test
